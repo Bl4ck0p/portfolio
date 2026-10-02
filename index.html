@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chukwuka Miles — Developer Portfolio</title>
+<meta name="description" content="Portfolio of Chukwuka Miles (Bl4ck0p) — developer of bots, AI tools and web experiences.">
+<link rel="icon" href="https://avatars.githubusercontent.com/u/192806734?v=4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07070d;
+    --bg2:#0c0c16;
+    --card:#10101c;
+    --border:rgba(255,255,255,.08);
+    --txt:#e8e8f2;
+    --muted:#9a9ab0;
+    --acc1:#7c3aed;
+    --acc2:#06b6d4;
+    --grad:linear-gradient(120deg,#7c3aed,#06b6d4);
+    --radius:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--txt);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+  h1,h2,h3,.brand{font-family:'Space Grotesk',sans-serif}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:#7c3aed;color:#fff}
+  ::-webkit-scrollbar{width:9px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(#7c3aed,#06b6d4);border-radius:99px}
+
+  /* ---------- Canvas background ---------- */
+  #stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 5vw;
+    background:rgba(7,7,13,.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s, padding .3s;
+  }
+  nav.scrolled{border-bottom-color:var(--border);padding:12px 5vw}
+  .brand{font-weight:700;font-size:1.15rem;display:flex;align-items:center;gap:.6rem}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--grad);box-shadow:0 0 14px #7c3aed;animation:pulse 2.4s infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.6);opacity:.5}}
+  .nav-links{display:flex;gap:2.2rem;list-style:none}
+  .nav-links a{color:var(--muted);font-size:.92rem;font-weight:500;position:relative;transition:color .25s}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--grad);border-radius:2px;transition:width .3s}
+  .nav-links a:hover,.nav-links a.active{color:#fff}
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%}
+  .gh-btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:.55rem 1.1rem;border-radius:99px;
+    border:1px solid var(--border);background:var(--card);
+    font-size:.88rem;font-weight:600;transition:.25s;
+  }
+  .gh-btn:hover{border-color:#7c3aed;box-shadow:0 0 22px rgba(124,58,237,.35);transform:translateY(-2px)}
+  .burger{display:none;background:none;border:none;color:var(--txt);font-size:1.6rem;cursor:pointer}
+
+  /* ---------- Layout ---------- */
+  section{position:relative;z-index:1;padding:110px 5vw;max-width:1200px;margin:0 auto}
+  .sec-tag{
+    font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:.18em;
+    color:var(--acc2);text-transform:uppercase;margin-bottom:.9rem;display:flex;align-items:center;gap:.7rem;
+  }
+  .sec-tag::before{content:"";width:34px;height:1px;background:var(--acc2)}
+  .sec-title{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:3rem;line-height:1.15}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* ---------- Hero ---------- */
+  #home{min-height:100vh;display:flex;align-items:center;padding-top:140px}
+  .hero-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:4rem;align-items:center;width:100%}
+  .hi{font-family:'JetBrains Mono',monospace;color:var(--acc2);font-size:1rem;margin-bottom:1rem}
+  .hero-name{font-size:clamp(2.6rem,6.5vw,4.6rem);line-height:1.05;letter-spacing:-.02em}
+  .typed-wrap{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.25rem,2.6vw,1.8rem);color:var(--muted);margin:1.1rem 0 1.6rem;min-height:2.2em}
+  .cursor{display:inline-block;width:3px;background:var(--acc2);animation:blink .8s step-end infinite;color:transparent}
+  @keyframes blink{50%{opacity:0}}
+  .hero-desc{color:var(--muted);max-width:540px;margin-bottom:2.3rem;font-size:1.02rem}
+  .cta-row{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;
+    padding:.9rem 1.7rem;border-radius:99px;font-weight:600;font-size:.95rem;
+    transition:.25s;cursor:pointer;border:none;
+  }
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 8px 30px rgba(124,58,237,.4)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(6,182,212,.45)}
+  .btn-ghost{background:transparent;color:var(--txt);border:1px solid var(--border)}
+  .btn-ghost:hover{border-color:var(--acc2);transform:translateY(-3px)}
+  .hero-visual{display:flex;justify-content:center;position:relative}
+  .avatar-ring{
+    position:relative;width:min(320px,70vw);aspect-ratio:1;border-radius:50%;
+    padding:5px;background:conic-gradient(from var(--ang,0deg),#7c3aed,#06b6d4,#7c3aed);
+    animation:spin 6s linear infinite;
+  }
+  @property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+  @keyframes spin{to{--ang:360deg}}
+  .avatar-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:6px solid var(--bg);display:block}
+  .float-chip{
+    position:absolute;background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:.5rem .9rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;
+    display:flex;align-items:center;gap:.5rem;box-shadow:0 10px 30px rgba(0,0,0,.45);
+    animation:float 5s ease-in-out infinite;
+  }
+  .float-chip:nth-child(2){top:8%;left:-6%;animation-delay:0s}
+  .float-chip:nth-child(3){bottom:14%;right:-8%;animation-delay:1.6s}
+  .float-chip:nth-child(4){bottom:-4%;left:10%;animation-delay:3s}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  .chip-ico{width:9px;height:9px;border-radius:50%}
+  .scroll-hint{
+    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+    color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.2em;
+    display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  }
+  .scroll-hint .line{width:1px;height:44px;background:linear-gradient(var(--acc2),transparent);animation:drop 1.8s infinite}
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ---------- About ---------- */
+  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3.5rem;align-items:start}
+  .about-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem}
+  .about-card p{color:var(--muted);margin-bottom:1rem}
+  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+  .stat{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:1.5rem 1.2rem;text-align:center;transition:.3s;
+  }
+  .stat:hover{transform:translateY(-5px);border-color:rgba(124,58,237,.5)}
+  .stat .num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700}
+  .stat .lbl{color:var(--muted);font-size:.82rem}
+
+  /* ---------- Skills ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem}
+  .skill{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:1.5rem;transition:.3s;position:relative;overflow:hidden;
+  }
+  .skill::before{content:"";position:absolute;inset:0;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(124,58,237,.14),transparent 70%);opacity:0;transition:opacity .3s}
+  .skill:hover::before{opacity:1}
+  .skill:hover{transform:translateY(-5px);border-color:rgba(6,182,212,.45)}
+  .skill .ico{font-size:1.7rem;margin-bottom:.8rem;display:block}
+  .skill h3{font-size:1.02rem;margin-bottom:.35rem}
+  .skill p{color:var(--muted);font-size:.86rem}
+
+  /* ---------- Projects ---------- */
+  .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem}
+  .proj{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:1.8rem;display:flex;flex-direction:column;gap:1rem;transition:.3s;position:relative;overflow:hidden;
+  }
+  .proj::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+  .proj:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.5);border-color:rgba(255,255,255,.15)}
+  .proj:hover::after{transform:scaleX(1)}
+  .proj-top{display:flex;justify-content:space-between;align-items:center}
+  .proj-folder{font-size:1.6rem}
+  .lang-badge{
+    font-family:'JetBrains Mono',monospace;font-size:.72rem;
+    padding:.3rem .7rem;border-radius:99px;border:1px solid var(--border);color:var(--muted);
+  }
+  .proj h3{font-size:1.2rem}
+  .proj p{color:var(--muted);font-size:.92rem;flex:1}
+  .proj-links{display:flex;gap:1.2rem;margin-top:.4rem}
+  .proj-links a{
+    font-size:.85rem;font-weight:600;color:var(--acc2);display:inline-flex;align-items:center;gap:.35rem;
+    transition:gap .25s,color .25s;
+  }
+  .proj-links a:hover{gap:.6rem;color:#fff}
+  .proj .fork-note{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:#5b5b75}
+
+  /* ---------- Contact ---------- */
+  .contact-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:3.5rem;align-items:start}
+  .contact-info p{color:var(--muted);margin-bottom:1.8rem}
+  .contact-line{display:flex;align-items:center;gap:.9rem;margin-bottom:1.1rem;color:var(--muted);font-size:.94rem;transition:color .25s}
+  a.contact-line:hover{color:#fff}
+  .contact-line .ico{width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
+  form{display:flex;flex-direction:column;gap:1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  label{font-size:.82rem;color:var(--muted);font-weight:500;display:block;margin-bottom:.4rem}
+  input,textarea{
+    width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+    padding:.85rem 1rem;color:var(--txt);font-family:'Inter',sans-serif;font-size:.92rem;
+    transition:border-color .25s, box-shadow .25s;
+  }
+  input:focus,textarea:focus{outline:none;border-color:var(--acc1);box-shadow:0 0 0 3px rgba(124,58,237,.18)}
+  textarea{resize:vertical;min-height:130px}
+  .form-status{font-size:.88rem;min-height:1.4em;margin:0;font-family:'JetBrains Mono',monospace}
+  .form-status.ok{color:#34d399}
+  .form-status.err{color:#f87171}
+
+  /* ---------- Footer ---------- */
+  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.5rem 5vw;text-align:center;color:var(--muted);font-size:.85rem}
+  footer .socials{display:flex;justify-content:center;gap:1.1rem;margin-bottom:1.2rem}
+  footer .socials a{
+    width:42px;height:42px;border-radius:50%;border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;transition:.25s;background:var(--card);
+  }
+  footer .socials a:hover{transform:translateY(-4px);border-color:var(--acc1);box-shadow:0 0 18px rgba(124,58,237,.35)}
+
+  /* ---------- Reveal ---------- */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:900px){
+    .hero-grid,.about-grid,.contact-wrap{grid-template-columns:1fr;gap:3rem}
+    .hero-visual{order:-1}
+    .avatar-ring{width:min(230px,60vw)}
+    .nav-links{
+      position:fixed;top:64px;right:0;flex-direction:column;gap:0;
+      background:rgba(10,10,18,.97);backdrop-filter:blur(16px);
+      width:min(300px,80vw);height:calc(100vh - 64px);
+      padding:2rem;transform:translateX(100%);transition:transform .35s;
+      border-left:1px solid var(--border);
+    }
+    .nav-links.open{transform:none}
+    .nav-links li{margin:1.1rem 0}
+    .burger{display:block}
+    .nav-gh{display:none}
+    section{padding:80px 6vw}
+    .row2{grid-template-columns:1fr}
+  }
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<nav id="nav">
+  <a href="#home" class="brand"><span class="dot"></span>Bl4ck0p<span style="color:var(--muted);font-weight:400">/dev</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="gh-btn nav-gh" href="https://github.com/Bl4ck0p" target="_blank" rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    GitHub
+  </a>
+  <button class="burger" id="burger" aria-label="Menu">☰</button>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="home">
+  <div class="hero-grid">
+    <div>
+      <p class="hi">// hello world, I'm</p>
+      <h1 class="hero-name">Chukwuka <span class="grad-text">Miles</span></h1>
+      <div class="typed-wrap">I build <span class="grad-text" id="typed"></span><span class="cursor">|</span></div>
+      <p class="hero-desc">
+        Creative developer crafting bots, AI-powered tools and web experiences that people actually enjoy using.
+        I turn caffeine and curiosity into clean, working code.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#projects">View My Work →</a>
+        <a class="btn btn-ghost" href="https://github.com/Bl4ck0p" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          github.com/Bl4ck0p
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="avatar-ring"><img src="https://avatars.githubusercontent.com/u/192806734?v=4" alt="Chukwuka Miles avatar"></div>
+      <div class="float-chip"><span class="chip-ico" style="background:#f1e05a"></span>JavaScript</div>
+      <div class="float-chip"><span class="chip-ico" style="background:#e34c26"></span>HTML / CSS</div>
+      <div class="float-chip"><span class="chip-ico" style="background:#06b6d4"></span>Open Source</div>
+    </div>
+  </div>
+  <div class="scroll-hint">SCROLL<span class="line"></span></div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <p class="sec-tag reveal">01 — About</p>
+  <h2 class="sec-title reveal">Behind the <span class="grad-text">handle</span></h2>
+  <div class="about-grid">
+    <div class="about-card reveal">
+      <p>I'm <strong style="color:#fff">Chukwuka Miles</strong> — known online as <strong style="color:#fff">Bl4ck0p</strong>. I'm a developer who loves building things that live on the internet: automation bots, AI-assisted tools, and slick web interfaces.</p>
+      <p>My flagship project, <strong style="color:#fff">Nile AI Study Buddy</strong>, brings AI-powered learning assistance to students at Nile University — because good tools should make hard things feel easy.</p>
+      <p>When I'm not shipping code, I'm exploring new tech, tweaking my setup, and looking for the next problem worth solving.</p>
+    </div>
+    <div class="stats-grid reveal">
+      <div class="stat"><div class="num grad-text" id="statRepos">–</div><div class="lbl">Public Repos</div></div>
+      <div class="stat"><div class="num grad-text" id="statStars">–</div><div class="lbl">Stars Earned</div></div>
+      <div class="stat"><div class="num grad-text" id="statFollowers">–</div><div class="lbl">Followers</div></div>
+      <div class="stat"><div class="num grad-text" id="statSince">2024</div><div class="lbl">Coding Since</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <p class="sec-tag reveal">02 — Skills</p>
+  <h2 class="sec-title reveal">What I <span class="grad-text">work with</span></h2>
+  <div class="skills-grid">
+    <div class="skill reveal"><span class="ico">⚡</span><h3>JavaScript</h3><p>Node.js scripting, WhatsApp &amp; Telegram bots, automation tooling and async logic.</p></div>
+    <div class="skill reveal"><span class="ico">🎨</span><h3>HTML &amp; CSS</h3><p>Responsive, modern interfaces with clean layout, motion and attention to detail.</p></div>
+    <div class="skill reveal"><span class="ico">🤖</span><h3>AI Integration</h3><p>Building AI-assisted products like study companions and smart chat experiences.</p></div>
+    <div class="skill reveal"><span class="ico">🛠️</span><h3>Git &amp; GitHub</h3><p>Version control, open-source collaboration and shipping code the right way.</p></div>
+    <div class="skill reveal"><span class="ico">📟</span><h3>Automation</h3><p>Group-management bots and workflow automation that save real hours.</p></div>
+    <div class="skill reveal"><span class="ico">🧠</span><h3>Problem Solving</h3><p>Breaking complex ideas into simple, working systems — fast.</p></div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <p class="sec-tag reveal">03 — Projects</p>
+  <h2 class="sec-title reveal">Featured <span class="grad-text">work</span></h2>
+  <div class="proj-grid">
+    <article class="proj reveal">
+      <div class="proj-top"><span class="proj-folder">💛</span><span class="lang-badge">Live Site</span></div>
+      <h3>Children Fundraiser</h3>
+      <p>A live fundraising platform built to support children in need — turning visitors' goodwill into real-world impact.</p>
+      <span class="fork-note">// deployed on Netlify</span>
+      <div class="proj-links">
+        <a href="https://children-fundraiser.netlify.app/" target="_blank" rel="noopener">Live Site →</a>
+      </div>
+    </article>
+    <article class="proj reveal">
+      <div class="proj-top"><span class="proj-folder">🤖</span><span class="lang-badge">Live Site</span></div>
+      <h3>Nile AI Study Buddy</h3>
+      <p>An AI-powered study companion built for Nile University students — helping them learn smarter with intelligent assistance.</p>
+      <div class="proj-links">
+        <a href="https://nile-studybuddy.netlify.app/" target="_blank" rel="noopener">Live Site →</a>
+        <a href="https://github.com/Bl4ck0p/nile-ai-study-buddy" target="_blank" rel="noopener">Code →</a>
+      </div>
+    </article>
+    <article class="proj reveal">
+      <div class="proj-top"><span class="proj-folder">💬</span><span class="lang-badge">JavaScript</span></div>
+      <h3>Homelander Bot</h3>
+      <p>A WhatsApp bot for managing groups — moderation, commands and community tooling, based on the Knightbot-MD framework.</p>
+      <span class="fork-note">// forked &amp; customized</span>
+      <div class="proj-links">
+        <a href="https://github.com/Bl4ck0p/Homelander" target="_blank" rel="noopener">Code →</a>
+      </div>
+    </article>
+    <article class="proj reveal">
+      <div class="proj-top"><span class="proj-folder">🚀</span><span class="lang-badge">JavaScript</span></div>
+      <h3>Developer Folio</h3>
+      <p>A polished software-developer portfolio template — studied, forked and adapted to understand modern portfolio architecture.</p>
+      <span class="fork-note">// forked from saadpasta</span>
+      <div class="proj-links">
+        <a href="https://github.com/Bl4ck0p/developerFolio" target="_blank" rel="noopener">Code →</a>
+      </div>
+    </article>
+  </div>
+  <div style="margin-top:2.5rem" class="reveal">
+    <a class="btn btn-ghost" href="https://github.com/Bl4ck0p?tab=repositories" target="_blank" rel="noopener">See all repositories on GitHub →</a>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <p class="sec-tag reveal">04 — Contact</p>
+  <h2 class="sec-title reveal">Let's build something <span class="grad-text">together</span></h2>
+  <div class="contact-wrap">
+    <div class="contact-info reveal">
+      <p>Have a project in mind, a question, or just want to say hi? Drop a message — it lands straight in my inbox.</p>
+      <a class="contact-line" href="mailto:alister.rouge@gmail.com">
+        <span class="ico">✉️</span> alister.rouge@gmail.com
+      </a>
+      <a class="contact-line" href="https://children-fundraiser.netlify.app/" target="_blank" rel="noopener">
+        <span class="ico">💛</span> children-fundraiser.netlify.app
+      </a>
+      <a class="contact-line" href="https://github.com/Bl4ck0p" target="_blank" rel="noopener">
+        <span class="ico">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        </span> github.com/Bl4ck0p
+      </a>
+      <div class="contact-line"><span class="ico">📍</span> Available for freelance &amp; collabs</div>
+    </div>
+    <form id="contactForm" class="reveal">
+      <div class="row2">
+        <div><label for="name">Name</label><input id="name" name="name" type="text" placeholder="Your name" required></div>
+        <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@example.com" required></div>
+      </div>
+      <div><label for="subject">Subject</label><input id="subject" name="subject" type="text" placeholder="What's this about?" required></div>
+      <div><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell me everything..." required></textarea></div>
+      <button class="btn btn-primary" type="submit" id="sendBtn">Send Message 🚀</button>
+      <p class="form-status" id="formStatus"></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="socials">
+    <a href="https://github.com/Bl4ck0p" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    </a>
+    <a href="mailto:alister.rouge@gmail.com" aria-label="Email">✉️</a>
+  </div>
+  <p>Designed &amp; built by <strong style="color:#fff">Chukwuka Miles</strong> · © 2026 · <span style="font-family:'JetBrains Mono',monospace">Bl4ck0p</span></p>
+</footer>
+
+<script>
+/* ================= Particle starfield ================= */
+(function(){
+  const c=document.getElementById('stars'),x=c.getContext('2d');
+  let W,H,P=[],N;
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;N=Math.min(140,Math.floor(W*H/12000));P=[];
+    for(let i=0;i<N;i++)P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+.4,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,o:Math.random()*.5+.15});
+  }
+  resize();addEventListener('resize',resize);
+  (function loop(){
+    x.clearRect(0,0,W,H);
+    for(const p of P){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fillStyle='rgba(160,150,255,'+p.o+')';x.fill();
+    }
+    // connective lines
+    for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){
+      const a=P[i],b=P[j],dx=a.x-b.x,dy=a.y-b.y,d=dx*dx+dy*dy;
+      if(d<12000){x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.strokeStyle='rgba(124,58,237,'+(0.10*(1-d/12000))+')';x.stroke();}
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ================= Typing effect ================= */
+(function(){
+  const roles=['WhatsApp bots.','AI study tools.','web experiences.','things that work.'];
+  const el=document.getElementById('typed');let i=0,j=0,del=false;
+  (function tick(){
+    const word=roles[i];
+    el.textContent=word.slice(0,j);
+    if(!del&&j<word.length){j++;setTimeout(tick,70);}
+    else if(!del){del=true;setTimeout(tick,1600);}
+    else if(j>0){j--;setTimeout(tick,35);}
+    else{del=false;i=(i+1)%roles.length;setTimeout(tick,350);}
+  })();
+})();
+
+/* ================= Nav behavior ================= */
+const nav=document.getElementById('nav'),burger=document.getElementById('burger'),links=document.getElementById('navLinks');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+burger.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+/* Active link highlight */
+const secs=[...document.querySelectorAll('section')];
+const navA=[...links.querySelectorAll('a')];
+addEventListener('scroll',()=>{
+  let cur=secs[0].id;
+  for(const s of secs) if(scrollY>=s.offsetTop-200) cur=s.id;
+  navA.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+
+/* ================= Scroll reveal ================= */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ================= Skill card spotlight ================= */
+document.querySelectorAll('.skill').forEach(s=>{
+  s.addEventListener('mousemove',e=>{const r=s.getBoundingClientRect();s.style.setProperty('--mx',(e.clientX-r.left)+'px');s.style.setProperty('--my',(e.clientY-r.top)+'px');});
+});
+
+/* ================= Live GitHub stats ================= */
+(async function(){
+  try{
+    const r=await fetch('https://api.github.com/users/Bl4ck0p');
+    if(!r.ok) throw 0;
+    const u=await r.json();
+    document.getElementById('statRepos').textContent=u.public_repos;
+    document.getElementById('statFollowers').textContent=u.followers;
+    document.getElementById('statSince').textContent=new Date(u.created_at).getFullYear();
+    const rr=await fetch('https://api.github.com/users/Bl4ck0p/repos?per_page=100');
+    if(rr.ok){const repos=await rr.json();document.getElementById('statStars').textContent=repos.reduce((s,x)=>s+x.stargazers_count,0);}
+  }catch(e){
+    document.getElementById('statRepos').textContent='3';
+    document.getElementById('statStars').textContent='1';
+    document.getElementById('statFollowers').textContent='0';
+  }
+})();
+
+/* ================= Contact form (sends to alister.rouge@gmail.com) ================= */
+document.getElementById('contactForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('sendBtn'),st=document.getElementById('formStatus');
+  btn.disabled=true;btn.textContent='Sending...';st.className='form-status';st.textContent='';
+  const data={name:this.name.value,email:this.email.value,subject:this.subject.value,message:this.message.value,_subject:'Portfolio contact: '+this.subject.value,_template:'table',_captcha:'false'};
+  try{
+    const r=await fetch('https://formsubmit.co/ajax/alister.rouge@gmail.com',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(data)
+    });
+    if(!r.ok) throw 0;
+    st.className='form-status ok';
+    st.textContent='✓ Message sent! I\'ll get back to you soon.';
+    this.reset();
+  }catch(err){
+    st.className='form-status err';
+    st.innerHTML='✗ Could not send automatically — <a href="mailto:alister.rouge@gmail.com?subject='+encodeURIComponent(this.subject.value)+'&body='+encodeURIComponent(this.message.value)+'" style="text-decoration:underline">click here to email me directly</a>.';
+  }
+  btn.disabled=false;btn.textContent='Send Message 🚀';
+});
+</script>
+</body>
+</html>
